@@ -1,0 +1,74 @@
+{% extends "index.html" %}
+
+{% block content %}
+<h1>Control Panel for Display</h1>
+{% if user.is_authenticated %}
+    <p>Welcome, {{ user.full_name }}!</p>
+{% else %}
+    <p>You are not logged in.</p>
+{% endif %}
+<form id="messageForm">
+    {{ form.as_p }}
+    <button type="submit">Update Message</button>
+</form>
+<div class="center-button">
+    <button id="installButton" class="hidden">Install App</button>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Existing function to get CSRF token from cookie
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    
+        // Existing function to update message
+        function updateMessage(msg) {
+            const csrftoken = getCookie('csrftoken');
+        
+            fetch('/update_message/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken
+                },
+                body: JSON.stringify({ message: msg })
+            });
+        }
+    
+        // New: function to update message using form
+        const form = document.getElementById('messageForm');
+        
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(form);
+            
+            const csrftoken = getCookie('csrftoken'); // Use the getCookie function to get CSRF token
+    
+            fetch('/update_message/', {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrftoken
+                },
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data); // handle response
+            });
+        });
+    });
+</script>
+
+{% endblock %}
+```

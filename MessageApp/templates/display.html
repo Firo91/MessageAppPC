@@ -1,0 +1,33 @@
+{% extends "index.html" %}
+<!-- display.html -->
+{% block content %}
+{% if user.is_authenticated %}
+<h1>Navn: {{user.full_name}} </h1>
+<h1>Rolle: {{user.title}}</h1>
+{% else %}
+    <p>You are not logged in.</p>
+{% endif %}
+<div id="messageBox" class="centered-text"></div>
+
+<script>
+    function fetchMessage() {
+        fetch('/get_message/')
+        .then(response => response.json())
+        .then(data => {
+            const messageBox = document.getElementById('messageBox');
+            messageBox.textContent = data.message || 'No message';
+            
+            const newColor = data.background_color || 'white';
+            
+            // Change the background color of the message box
+            messageBox.style.setProperty('background-color', newColor, 'important');
+    
+            // Change the background color of the entire screen
+            document.body.style.backgroundColor = newColor;
+        });
+    }
+
+    fetchMessage();
+    setInterval(fetchMessage, 5000);
+</script>
+{% endblock %}

@@ -1,0 +1,90 @@
+.centered-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - (2 * 20px));  /* Adjust 44px based on your h1 height */
+    font-size: 12em;  /* You can adjust this */
+    font-family: "Arial", sans-serif;  /* Choose your own font */
+  }
+
+.centered-h1 {
+    text-align: center;
+}
+
+/* Style the form */
+#messageForm {
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Style the form fields */
+#messageForm input,
+#messageForm select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Style the button */
+#messageForm button {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#messageForm button:hover {
+    background-color: #45a049;
+}
+
+/* Style the h1 */
+h1 {
+    background-color: #f1f1f1;  /* Light gray background */
+    margin: 5px;  /* No margin to fill up the top of the screen */
+    padding: 20px;  /* Padding for space around the text */
+    font-family: 'Arial', sans-serif;  /* Choose your font */
+    font-size: 2.5em;  /* Size of the text */
+    text-align: center;  /* Center-align the text */
+    color: #333;  /* Dark gray color for the text */
+    border-bottom: 1px solid #ccc;  /* Add a border at the bottom */
+}
+
+/* If you want to add some shadow for a lift effect */
+h1 {
+    box-shadow: 0px 3px 10px rgba(0,0,0,0.1);
+}
+
+/* Center the button on the page */
+.center-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Style the install button */
+#installButton {
+    background-color: #007BFF;  /* Blue background */
+    border: none;  /* No border */
+    color: white;  /* White text */
+    padding: 12px 24px;  /* Padding around the text */
+    text-align: center;  /* Centered text */
+    font-size: 16px;  /* Font size */
+    margin: 4px 2px;  /* Margin */
+    cursor: pointer;  /* Hand cursor on hover */
+    border-radius: 4px;  /* Rounded corners */
+}
+
+#installButton:hover {
+    background-color: #0056b3;  /* Darker blue on hover */
+}

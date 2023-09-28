@@ -1,0 +1,46 @@
+<!-- myapp/templates/myapp/index.html -->
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="manifest" href="{% static 'manifest.json' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+    {% csrf_token %}
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <!-- ... other head elements ... -->
+</head>
+<body>
+    {% block content %}
+    <!-- your content -->
+    {% endblock %}
+    <script>
+      let deferredPrompt;
+  
+      // Capture the 'beforeinstallprompt' event
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        // Show the "Install" button when this event is triggered
+        document.getElementById("installButton").style.display = 'block';
+      });
+  
+      // Call this function to show the install prompt
+      function showInstallPrompt() {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+              console.log('User accepted the install prompt');
+            }
+            deferredPrompt = null;
+          });
+        }
+      }
+  
+      // Attach the function to the button's click event
+      document.getElementById("installButton").addEventListener("click", showInstallPrompt);
+    </script>
+    
+</body>
+</html>
