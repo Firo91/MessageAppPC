@@ -57,7 +57,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'MessageAppPWA.urls'
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://ccterminals.applikuapp.com/', 'http://ccterminals.applikuapp.com/'
+    'https://messageapp.applikuapp.com/', 'http://messageapp.applikuapp.com/'
 ]
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
