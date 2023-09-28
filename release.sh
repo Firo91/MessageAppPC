@@ -1,6 +1,5 @@
 #!/bin/bash
 
-cd MessageAppPWA/
 # Execute your command
 
 python manage.py migrate
