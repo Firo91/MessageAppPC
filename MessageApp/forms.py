@@ -5,7 +5,7 @@ from .models import CustomUser
 class MessageForm(forms.ModelForm):
     class Meta:
         model = MyMessage
-        fields = ['message', 'background_color']
+        fields = ['message', 'background_color', 'status', 'background_image']
 
 class CustomUserCreationForm(forms.ModelForm):
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)

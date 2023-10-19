@@ -41,11 +41,15 @@ def get_message(request):
     if last_message:
         message = last_message.message
         background_color = last_message.background_color
+        status = last_message.status
+        background_image = last_message.background_image
     else:
         message = ''
         background_color = 'white'
+        status = 'unknown'
+        background_image = ''
 
-    return JsonResponse({'message': message, 'background_color': background_color})
+    return JsonResponse({'message': message, 'background_color': background_color, 'status': status, 'background_image': background_image})
 
 def register(request):
     if request.method == 'POST':

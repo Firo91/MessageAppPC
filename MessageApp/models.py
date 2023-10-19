@@ -34,5 +34,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
 class MyMessage(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    message = models.TextField()
-    background_color = models.CharField(max_length=20, choices=[('green', 'Green'), ('red', 'Red'), ('yellow', 'Yellow'),('#A91101', 'Soft Red')])
+    message = models.TextField(blank=True, null=True)
+    background_color = models.CharField(max_length=20, blank=True, null=True, choices=[('green', 'Green'), ('red', 'Red'), ('yellow', 'Yellow'),('#A91101', 'Soft Red'),('', 'No Color')])
+    status = models.CharField(max_length=20,blank=True, null=True, choices=[('Ledig', 'Ledig'), ('Møte', 'Møte'), ('Ikke på kontoret', 'Ikke på kontoret'),('Reise','Reise'),('','No Status')], default='')
+    background_image = models.CharField(max_length=255, blank=True, null=True, choices=[('flyingPlan.mp4', 'Reise'),('Matrix.mp4', 'Kontoret')])
