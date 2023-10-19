@@ -28,8 +28,8 @@ if DEBUG:
 else:
     ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['example.com'])
 
-# SECRET_KEY = env('DJANGO_SECRET_KEY')
-SECRET_KEY = 'ThisIsNotASecretKey'
+SECRET_KEY = env('DJANGO_SECRET_KEY')
+#SECRET_KEY = 'ThisIsNotASecretKey'
 
 
 # Application definition
@@ -85,18 +85,18 @@ AUTH_USER_MODEL = 'MessageApp.CustomUser'
 
 # Databases
 # Live DB
-#DATABASES = {
-#    "default": env.db("DATABASE_URL")
-#}
-#DATABASES["default"]["ATOMIC_REQUESTS"] = True
-#DATABASES["default"]["CONN_MAX_AGE"] = env.int("CONN_MAX_AGE", default=60)
-# Testing DB
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    "default": env.db("DATABASE_URL")
 }
+DATABASES["default"]["ATOMIC_REQUESTS"] = True
+DATABASES["default"]["CONN_MAX_AGE"] = env.int("CONN_MAX_AGE", default=60)
+# Testing DB
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': BASE_DIR / 'db.sqlite3',
+#    }
+#}
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
