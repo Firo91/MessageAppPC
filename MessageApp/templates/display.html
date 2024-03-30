@@ -5,7 +5,7 @@
 {% block content %}
 <video autoplay muted loop id="backgroundVideo" style="position: fixed; top: 0; left: 0; min-width: 100%; min-height: 100%; z-index: -1;"></video>
 {% if user.is_authenticated %}
-<h1>Navn: {{user.full_name}} </br> Rolle: {{user.title}} </h1>
+<h1 id="nameBox">Navn: {{user.full_name}} </br> Rolle: {{user.title}} </h1>
 {% else %}
     <p>You are not logged in.</p>
 {% endif %}
@@ -20,87 +20,71 @@
             case 'red':
                 return '#f79797';  // Brighter red shade
             case 'yellow':
-                return '#f2920c';  // Brighter yellow shade
+                return '#F1F3A0';  // Brighter yellow shade
             case 'green':
                 return '#03fcb1';  // Brighter green shade
             default:
                 return color;
         }
     }
-                
+    // Mapping between image names and statuses
+    const statusMapping = {
+        'flyingPlan.mp4': 'På Reise',
+        'Matrix.mp4': 'Ledig',
+        'meeting.mp4': 'Møte',
+        'terminal.mp4': 'På Terminalen',
+    };
+
     function fetchMessage() {
         fetch('/get_message/')
         .then(response => response.json())
         .then(data => {
             const messageBox = document.getElementById('messageBox');
             const statusBox = document.getElementById('statusBox');
+            const nameBox = document.getElementById('nameBox');
             const backgroundVideo = document.getElementById('backgroundVideo');
-     
+
             statusBox.textContent = data.status || '';
             messageBox.textContent = data.message || '';
-    
+
+            // Hide the messageBox if data.message is empty, otherwise show it
+            messageBox.style.display = data.message ? 'block' : 'none';
+            
+            const newColor = data.background_color || 'blue';
+            nameBox.style.backgroundColor = newColor;
+            statusBox.style.backgroundColor = newColor;
+
             if (data.background_image) {
                 // Assuming data.background_image holds the filename of the video.
                 backgroundVideo.src = `/static/backgrounds/${data.background_image}`;
                 document.body.style.backgroundColor = 'transparent';
                 document.body.style.backgroundImage = 'none'; // To ensure the gradient doesn't show up
-                function fetchMessage() {
-                    fetch('/get_message/')
-                    .then(response => response.json())
-                    .then(data => {
-                        const messageBox = document.getElementById('messageBox');
-                        const statusBox = document.getElementById('statusBox');
-                        const backgroundVideo = document.getElementById('backgroundVideo');
+                backgroundVideo.style.display = 'block'; // Display the video
 
-                        statusBox.textContent = data.status || '';
-                        messageBox.textContent = data.message || '';
-                        statusBox.style.backgroundColor = 'red'; // Set the statusBox background color
+                // Set the status based on the image name
+                statusBox.textContent = statusMapping[data.background_image] || ''; 
 
-                        if (data.background_image) {
-                            // Assuming data.background_image holds the filename of the video.
-                            backgroundVideo.src = `/static/backgrounds/${data.background_image}`;
-                            document.body.style.backgroundColor = 'transparent';
-                            document.body.style.backgroundImage = 'none'; // To ensure the gradient doesn't show up
-                            backgroundVideo.style.display = 'block'; // Display the video
-                        } else {
-                            backgroundVideo.style.display = 'none'; // Hide the video
-                            const newColor = data.background_color || 'white';
-
-                            if (newColor === 'red' || newColor === 'yellow' || newColor === 'green') {
-                                const gradientColor = getBrighterShade(newColor);
-                                document.body.style.backgroundImage = `linear-gradient(45deg, ${newColor}, ${gradientColor})`;
-                                document.body.classList.add('waveEffect');
-                                messageBox.style.backgroundColor = 'transparent';
-                                statusBox.style.backgroundColor = ''; // Reset the statusBox background color
-                            } else {
-                                document.body.style.backgroundColor = newColor;
-                                messageBox.style.backgroundColor = newColor;
-                                document.body.classList.remove('waveEffect');
-                                statusBox.style.backgroundColor = ''; // Reset the statusBox background color
-                            }
-                        }
-                    });
-                }
             } else {
                 backgroundVideo.style.display = 'none'; // Hide the video
                 const newColor = data.background_color || 'white';
-    
+
                 if (newColor === 'red' || newColor === 'yellow' || newColor === 'green') {
                     const gradientColor = getBrighterShade(newColor);
                     document.body.style.backgroundImage = `linear-gradient(45deg, ${newColor}, ${gradientColor})`;
                     document.body.classList.add('waveEffect');
                     messageBox.style.backgroundColor = 'transparent';
-                    
+                    statusBox.style.backgroundColor = ''; // Reset the statusBox background color
                 } else {
                     document.body.style.backgroundColor = newColor;
                     messageBox.style.backgroundColor = newColor;
+                    nameBox.style.backgroundColor = newColor;
                     document.body.classList.remove('waveEffect');
+                    statusBox.style.backgroundColor = ''; // Reset the statusBox background color
                 }
             }
         });
-    }
-                
-                fetchMessage();
-                setInterval(fetchMessage, 120000);
-            </script>
+    }               
+    fetchMessage();
+    setInterval(fetchMessage, 120000);
+</script>
     {% endblock %}
