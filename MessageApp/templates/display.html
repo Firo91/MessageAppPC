@@ -33,6 +33,8 @@
         'Matrix.mp4': 'Ledig',
         'meeting.mp4': 'Møte',
         'terminal.mp4': 'På Terminalen',
+        'home.mp4':'Ikke på kontoret',
+        'work home.mp4': 'Hjemmekontor',
     };
 
     function fetchMessage() {
@@ -50,7 +52,7 @@
             // Hide the messageBox if data.message is empty, otherwise show it
             messageBox.style.display = data.message ? 'block' : 'none';
             
-            const newColor = data.background_color || 'blue';
+            const newColor = data.background_color || 'white';
             nameBox.style.backgroundColor = newColor;
             statusBox.style.backgroundColor = newColor;
 

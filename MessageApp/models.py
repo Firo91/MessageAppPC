@@ -37,4 +37,4 @@ class MyMessage(models.Model):
     message = models.TextField(blank=True, null=True)
     background_color = models.CharField(max_length=20, blank=True, null=True, choices=[('green', 'Green'), ('red', 'Red'), ('yellow', 'Yellow'),('#A91101', 'Soft Red'),('', 'No Color')])
     status = models.CharField(max_length=20,blank=True, null=True, choices=[('Ledig', 'Ledig'), ('Møte', 'Møte'), ('Ikke på kontoret', 'Ikke på kontoret'),('På Reise','På Reise'),('På Terminalen','På Terminalen'),('','No Status')], default='')
-    background_image = models.CharField(max_length=255, blank=True, null=True, choices=[('flyingPlan.mp4', 'Reise'),('Matrix.mp4', 'Kontoret'),('meeting.mp4', 'Møte'),('terminal.mp4', 'Terminal'),('home.mp4', 'Hjem')])
+    background_image = models.CharField(max_length=255, blank=True, null=True, choices=[('flyingPlan.mp4', 'Reise'),('Matrix.mp4', 'Kontoret'),('meeting.mp4', 'Møte'),('terminal.mp4', 'Terminal'),('home.mp4', 'Hjem'),('work home.mp4','Jobber Hjemme')])
